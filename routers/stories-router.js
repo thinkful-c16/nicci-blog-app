@@ -3,10 +3,18 @@
 const express = require('express');
 const router = express.Router();
 
-var data = require('../db/dummy-data');
+//var data = require('../db/dummy-data');
 
-// const { DATABASE } = require('../config');
-// const knex = require('knex')(DATABASE);
+const { DATABASE } = require('../config');
+//console.log(DATABASE);
+const knex = require('knex')(DATABASE);
+let data = [];
+
+knex('stories')
+  .select()
+  //.then(results => console.log(JSON.stringify(results, null, 4)))
+  .then(results => data = results)
+  .catch(err => console.log(err));
 
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/stories', (req, res) => {
